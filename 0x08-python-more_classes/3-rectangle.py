@@ -60,4 +60,5 @@ class Rectangle:
             rectangle = ""
             for _ in range(self.height):
                 rectangle += "#" * self.width + "\n"
+            rectangle += "#" * self.width
             return rectangle
