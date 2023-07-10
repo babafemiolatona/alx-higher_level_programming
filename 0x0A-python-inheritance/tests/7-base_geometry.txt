@@ -1,0 +1,56 @@
+The ``7-base_geometry`` module
+============================
+
+Using ``BaseGeometry``
+------------------------------
+
+Import class:
+	>>> BaseGeometry = __import__('7-base_geometry').BaseGeometry
+
+Check docstring:
+
+	>>> mod = __import__('7-base_geometry').__doc__
+	>>> len(mod) > 1
+	True
+
+	>>> cls = __import__('7-base_geometry').BaseGeometry.__doc__
+	>>> len(cls) > 1
+	True
+
+	>>> mthd1 = __import__('7-base_geometry').BaseGeometry.area.__doc__
+	>>> len(mthd1) > 1
+	True
+
+	>>> mthd2 = __import__('7-base_geometry').BaseGeometry.integer_validator.__doc__
+	>>> len(mthd2) > 1
+	True
+
+Now use it:
+
+	>>> bg = BaseGeometry()
+	>>> bg.integer_validator("name", 36)
+
+	>>> bg.integer_validator("name",)
+	Traceback (most recent call last):
+	...
+	TypeError: integer_validator() missing 1 required positional argument: 'value'
+
+	>>> bg.integer_validator()
+	Traceback (most recent call last):
+	...
+	TypeError: integer_validator() missing 2 required positional arguments: 'name' and 'value'
+
+	>>> bg.integer_validator("name", -36)
+	Traceback (most recent call last):
+        ...
+	ValueError: name must be greater than 0
+
+	>>> bg.integer_validator("name", 89.222)
+	Traceback (most recent call last):
+        ...
+	TypeError: name must be an integer
+
+	>>> bg.integer_validator("name", "hello")
+        Traceback (most recent call last):
+        ...
+        TypeError: name must be an integer
