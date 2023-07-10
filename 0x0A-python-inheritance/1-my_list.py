@@ -3,6 +3,6 @@
 
 
 class MyList(list):
-    """Inherits from lisy=t"""
+    """Inherits from list"""
     def print_sorted(self):
         print(sorted(self))
