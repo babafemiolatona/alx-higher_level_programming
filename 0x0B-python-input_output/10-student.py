@@ -17,11 +17,11 @@ class Student:
             attrs = vars(self).keys()
         result = {}
 
-        for attr, value in vars(self).items():
-            if attr in attrs and isinstance(value, (list, dict, str, int, bool)):
-                result[attr] = value
-            elif attr in attrs and hasattr(value, '__dict__'):
-                result[attrs] = self._to_json_recursive(value)
+        for attr, val in vars(self).items():
+            if attr in attrs and isinstance(val, (list, dict, str, int, bool)):
+                result[attr] = val
+            elif attr in attrs and hasattr(val, '__dict__'):
+                result[attrs] = self._to_json_recursive(val)
         return result
 
     def _to_json_recursive(self, obj):
