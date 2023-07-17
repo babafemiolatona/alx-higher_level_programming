@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 """ Base """
-import json
-
+import json, csv
 
 class Base:
     """Defines a base class"""
@@ -56,11 +55,55 @@ class Base:
 
     @classmethod
     def load_from_file(cls):
+        """Returns a list of instances loaded from a JSON file"""
         filename = f"{cls.__name__}.json"
         try:
             with open(filename, 'r') as file:
                 json_data = file.read()
                 data = cls.from_json_string(json_data)
                 return [cls.create(**obj_dict) for obj_dict in data]
+        except FileNotFoundError:
+            return []
+
+    @classmethod
+    def save_to_file_csv(cls, list_objs):
+        """Serializes and saves instances to a CSV file"""
+        filename = f"{cls.__name__}.csv"
+        with open(filename, 'w', newline='') as file:
+            writer = csv.writer(file)
+            if cls.__name__ == "Rectangle":
+                fieldnames = ['id', 'width', 'height', 'x', 'y']
+            elif cls.__name__ == "Square":
+                fieldnames = ['id', 'size', 'x', 'y']
+            else:
+                raise TypeError(f"Unsupported class: {cls.__name__}")
+            writer.writerow(fieldnames)
+            for obj in list_objs:
+                row = [getattr(obj, field) for field in fieldnames]
+                writer.writerow(row)
+
+    @classmethod
+    def load_from_file_csv(cls):
+        """Deserializes and loads instances from a CSV file"""
+        filename = f"{cls.__name__}.csv"
+        try:
+            with open(filename, 'r', newline='') as file:
+                reader = csv.reader(file)
+                header = next(reader)
+
+                if cls.__name__ == "Rectangle":
+                    fieldnames = ['id', 'width', 'height', 'x', 'y']
+                elif cls.__name__ == "Square":
+                    fieldnames = ['id', 'size', 'x', 'y']
+                else:
+                    raise TypeError(f"Unsupported class: {cls.__name__}")
+
+                obj_list = []
+
+                for row in reader:
+                    obj_dict = {field: int(value) for field, value in zip(fieldnames, row)}
+                    obj_list.append(cls.create(**obj_dict))
+
+                return obj_list
         except FileNotFoundError:
             return []
