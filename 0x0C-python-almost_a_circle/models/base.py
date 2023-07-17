@@ -1,6 +1,8 @@
 #!/usr/bin/python3
 """ Base """
-import json, csv
+import json
+import csv
+
 
 class Base:
     """Defines a base class"""
@@ -101,7 +103,8 @@ class Base:
                 obj_list = []
 
                 for row in reader:
-                    obj_dict = {field: int(value) for field, value in zip(fieldnames, row)}
+                    obj_dict = {field: int(value) for field,
+                                value in zip(fieldnames, row)}
                     obj_list.append(cls.create(**obj_dict))
 
                 return obj_list
