@@ -53,3 +53,14 @@ class Base:
             raise TypeError(f"Unsupported class: {cls.__name__}")
         dummy_instance.update(**dictionary)
         return dummy_instance
+
+    @classmethod
+    def load_from_file(cls):
+        filename = f"{cls.__name__}.json"
+        try:
+            with open(filename, 'r') as file:
+                json_data = file.read()
+                data = cls.from_json_string(json_data)
+                return [cls.create(**obj_dict) for obj_dict in data]
+        except FileNotFoundError:
+            return []
