@@ -1,4 +1,4 @@
-#!/usr/bin/pyhton3
+#!/usr/bin/python3
 """
     Takes in a URL, sends a request to the URL
     and displays the body of the response
