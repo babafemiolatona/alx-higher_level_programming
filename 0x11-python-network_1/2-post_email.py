@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""Script that takes in a URL and an email, sends a POST request to the passed"""
+"""Script that takes in a URL and email, sends a POST request to the passed"""
 from urllib import request, parse
 from sys import argv
 
